@@ -70,12 +70,12 @@ if 'CXX' not in os.environ:
 #_framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
 py_exes = {
     '3.8' : "/usr/local/bin/python3.8.0",
-    '3.7' : "/usr/local/bin/python3.7",
-    '2.7' : "/usr/local/bin/python2.7",
-    '3.5' : "/usr/local/bin/python3.5",
-    '3.6' : "/usr/local/bin/python3.6",
-    'pypy': "/usr/local/bin/pypy",
-    'pypy3': "/usr/local/bin/pypy3",
+    #'3.7' : "/usr/local/bin/python3.7",
+    #'2.7' : "/usr/local/bin/python2.7",
+    #'3.5' : "/usr/local/bin/python3.5",
+    #'3.6' : "/usr/local/bin/python3.6",
+    #'pypy': "/usr/local/bin/pypy",
+    #'pypy3': "/usr/local/bin/pypy3",
 }
 egg_pys = {} # no more eggs!
 
