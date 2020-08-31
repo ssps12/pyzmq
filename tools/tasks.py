@@ -38,7 +38,7 @@ libsodium_version = '1.0.18'
 
 pjoin = os.path.join
 
-repo = 'sakshi87@github.com:zeromq/pyzmq'
+repo = 'git@github.com:zeromq/pyzmq'
 branch = os.getenv('PYZMQ_BRANCH', 'master')
 
 #sdkroot = os.getenv("SDKROOT")
@@ -119,7 +119,7 @@ def clone_repo(ctx, reset=False):
             run("git pull")
     else:
         run("git remote set-url origin https://github.com/zeromq/pyzmq")
-        run("git clone -b %s %s %s" % (branch, repo, repo_root))
+        run("git clone %s %s" % (repo, repo_root))
 
 @task
 def patch_version(ctx, vs):
