@@ -42,6 +42,7 @@ before_install:
       export ZMQ_DRAFT_API=1
     fi
   - pip install -r test-requirements.txt
+  - pip install invoke cython requests
   - |
     # install pinned tornado
     if [[ "$TORNADO" == "master" ]]; then
@@ -67,9 +68,11 @@ matrix:
     - python: 3.8
       env: ZMQ=
       arch: arm64
+      script: cd tools && invoke release 14.3.1
     - python: 3.8
       env: ZMQ=bundled
       arch: arm64
+      script: cd tools && invoke release 14.3.1
     - python: 3.7
       env: ZMQ=
     - python: 3.7
@@ -77,9 +80,11 @@ matrix:
     - python: 3.7
       env: ZMQ=
       arch: arm64
+      script: cd tools && invoke release 14.3.1
     - python: 3.7
       env: ZMQ=bundled
       arch: arm64
+      script: cd tools && invoke release 14.3.1
     - python: 3.6
       env:
         - ZMQ=
