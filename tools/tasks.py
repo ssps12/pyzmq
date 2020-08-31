@@ -87,8 +87,8 @@ env_root = os.path.join(tmp, 'envs')
 repo_root = pjoin(tmp, 'pyzmq-release')
 sdist_root = pjoin(tmp, 'pyzmq-sdist')
 
-def _py(py):
-    return py_exes[py]
+#def _py(py):
+#    return py_exes[py]
 
 def run(cmd, **kwargs):
     """wrapper around invoke.run that accepts a Popen list"""
@@ -163,7 +163,7 @@ def make_env(py_exe, *packages):
 
     Assumes `which python` has the `virtualenv` package
     """
-    py_exe = py_exes.get(py_exe, py_exe)
+    #py_exe = py_exes.get(py_exe, py_exe)
 
     if not os.path.exists(env_root):
         os.makedirs(env_root)
