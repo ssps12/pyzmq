@@ -156,8 +156,8 @@ def tag(ctx, vs, push=False):
     """Make the tag (don't push)"""
     patch_version(ctx, vs)
     with cd(repo_root):
-        run('git commit -a -m "release {}"'.format(vs))
-        run('git tag -a -m "release {0}" v{0}'.format(vs))
+        run('git commit -a -m "release 22.1.1"'.format(vs))
+        run('git tag -a -m "release 22.1.1" v22.1.1'.format(vs))
         if push:
             run('git push --tags')
             run('git push')
