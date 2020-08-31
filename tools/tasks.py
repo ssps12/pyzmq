@@ -118,6 +118,8 @@ def clone_repo(ctx, reset=False):
             run("git checkout %s" % branch)
             run("git pull")
     else:
+        run("git config --global user.email sakshi.sharma@puresoftware.com")
+        run("sakshi87")
         run("git remote set-url origin https://github.com/zeromq/pyzmq")
         run("git clone %s %s" % (repo, repo_root))
 
