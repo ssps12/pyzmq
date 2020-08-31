@@ -118,7 +118,7 @@ def clone_repo(ctx, reset=False):
             run("git checkout %s" % branch)
             run("git pull")
     else:
-        run("git remote set-url origin git@github.com:zeromq/pyzmq.git")
+        run("git remote set-url origin https://github.com/zeromq/pyzmq")
         run("git clone -b %s %s %s" % (branch, repo, repo_root))
 
 @task
