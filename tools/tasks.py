@@ -67,16 +67,16 @@ if 'CXX' not in os.environ:
     os.environ['CXX'] = 'clang++'
 
 #_framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
-#py_exes = {
-#    '3.8' : _framework_py('3.8'),
-#    '3.7' : _framework_py('3.7'),
-#    '2.7' : _framework_py('2.7'),
-#    '3.5' : _framework_py('3.5'),
-#    '3.6' : _framework_py('3.6'),
-#    'pypy': "/usr/local/bin/pypy",
-#    'pypy3': "/usr/local/bin/pypy3",
-#}
-#egg_pys = {} # no more eggs!
+py_exes = {
+    '3.8' : "/usr/local/bin/python3.8",
+    '3.7' : "/usr/local/bin/python3.7",
+    '2.7' : "/usr/local/bin/python2.7",
+    '3.5' : "/usr/local/bin/python3.5",
+    '3.6' : "/usr/local/bin/python3.6",
+    'pypy': "/usr/local/bin/pypy",
+    'pypy3': "/usr/local/bin/pypy3",
+}
+egg_pys = {} # no more eggs!
 
 default_py = '3.7'
 # all the Python versions to be built on linux
@@ -87,8 +87,8 @@ env_root = os.path.join(tmp, 'envs')
 repo_root = pjoin(tmp, 'pyzmq-release')
 sdist_root = pjoin(tmp, 'pyzmq-sdist')
 
-#def _py(py):
-#    return py_exes[py]
+def _py(py):
+    return py_exes[py]
 
 def run(cmd, **kwargs):
     """wrapper around invoke.run that accepts a Popen list"""
@@ -163,7 +163,7 @@ def make_env(py_exe, *packages):
 
     Assumes `which python` has the `virtualenv` package
     """
-    #py_exe = py_exes.get(py_exe, py_exe)
+    py_exe = py_exes.get(py_exe, py_exe)
 
     if not os.path.exists(env_root):
         os.makedirs(env_root)
