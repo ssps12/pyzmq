@@ -38,7 +38,7 @@ libsodium_version = '1.0.18'
 
 pjoin = os.path.join
 
-repo = 'git@github.com:zeromq/pyzmq'
+repo = 'github.com:zeromq/pyzmq'
 branch = os.getenv('PYZMQ_BRANCH', 'master')
 
 #sdkroot = os.getenv("SDKROOT")
