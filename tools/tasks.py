@@ -40,7 +40,7 @@ pjoin = os.path.join
 
 repo = 'git@github.com:zeromq/pyzmq'
 branch = os.getenv('PYZMQ_BRANCH', 'master')
-find / -type f -name python
+
 #sdkroot = os.getenv("SDKROOT")
 #if not sdkroot:
 #    xcode_prefix = check_output(["xcode-select", "-p"]).decode().strip()
