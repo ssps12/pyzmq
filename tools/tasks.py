@@ -40,7 +40,6 @@ pjoin = os.path.join
 
 repo = 'git@github.com:zeromq/pyzmq'
 branch = os.getenv('PYZMQ_BRANCH', 'master')
-which python
 find / -type f -name python
 #sdkroot = os.getenv("SDKROOT")
 #if not sdkroot:
