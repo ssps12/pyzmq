@@ -40,24 +40,24 @@ pjoin = os.path.join
 
 repo = 'git@github.com:zeromq/pyzmq'
 branch = os.getenv('PYZMQ_BRANCH', 'master')
-sdkroot = os.getenv("SDKROOT")
-if not sdkroot:
-    xcode_prefix = check_output(["xcode-select", "-p"]).decode().strip()
+#sdkroot = os.getenv("SDKROOT")
+#if not sdkroot:
+#    xcode_prefix = check_output(["xcode-select", "-p"]).decode().strip()
     # 10.9
-    sdkroot = os.path.join(xcode_prefix, "Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk")
-    if os.path.exists(sdkroot):
-        os.environ["SDKROOT"] = sdkroot
-    else:
-        print("SDK not found at %r" % sdkroot)
-        time.sleep(10)
+#    sdkroot = os.path.join(xcode_prefix, "Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk")
+#    if os.path.exists(sdkroot):
+#        os.environ["SDKROOT"] = sdkroot
+#    else:
+#        print("SDK not found at %r" % sdkroot)
+#        time.sleep(10)
 
 # Workaround for PyPy3 5.8
 if 'LDFLAGS' not in os.environ:
     os.environ['LDFLAGS'] = '-undefined dynamic_lookup'
 
 # set mac deployment target
-if 'MACOSX_DEPLOYMENT_TARGET' not in os.environ:
-    os.environ['MACOSX_DEPLOYMENT_TARGET'] = '10.9'
+#if 'MACOSX_DEPLOYMENT_TARGET' not in os.environ:
+#    os.environ['MACOSX_DEPLOYMENT_TARGET'] = '10.9'
 
 # set compiler env (avoids issues with missing 'gcc-4.2' on py27, etc.)
 if 'CC' not in os.environ:
