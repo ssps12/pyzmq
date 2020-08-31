@@ -69,7 +69,7 @@ if 'CXX' not in os.environ:
 
 #_framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
 py_exes = {
-    '3.7' : "3.7",
+    '3.7' : "/usr/local/bin/python3.7",
     #'3.7' : "/usr/local/bin/python3.7",
     #'2.7' : "/usr/local/bin/python2.7",
     #'3.5' : "/usr/local/bin/python3.5",
@@ -285,6 +285,7 @@ def release(ctx, vs, upload=False):
     for v, path in py_exes.items():
         if not os.path.exists(path):
             raise ValueError("Need %s at %s" % (v, path))
+            
 
     # start from scrach with clone and envs
     clone_repo(ctx, reset=True)
