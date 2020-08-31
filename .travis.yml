@@ -3,16 +3,7 @@ language: python
 cache:
   - apt
   - pip
-python:
-  - 2.7
-  - 3.6
-  - 3.8
-  - 3.9-dev
-  - pypy
-  - pypy3
-env:
-    - ZMQ=
-    - ZMQ=bundled
+
 before_install:
   - sudo add-apt-repository -y ppa:anton+/dnscrypt
   - sudo apt-get update
@@ -59,12 +50,6 @@ install:
 
 matrix:
   include:
-    - python: pypy
-      env: ZMQ=bundled
-    - python: 3.8
-      env: ZMQ=
-    - python: 3.8
-      env: ZMQ=bundled
     - python: 3.8
       env: ZMQ=
       arch: arm64
@@ -72,11 +57,7 @@ matrix:
     - python: 3.8
       env: ZMQ=bundled
       arch: arm64
-      script: cd tools && invoke release 14.3.1
-    - python: 3.7
-      env: ZMQ=
-    - python: 3.7
-      env: ZMQ=bundled
+      script: cd tools && invoke release 14.3.1 
     - python: 3.7
       env: ZMQ=
       arch: arm64
@@ -85,39 +66,5 @@ matrix:
       env: ZMQ=bundled
       arch: arm64
       script: cd tools && invoke release 14.3.1
-    - python: 3.6
-      env:
-        - ZMQ=
-        - TORNADO=none
-    - python: 3.6
-      env:
-        - ZMQ=
-        - TORNADO=master
-    - python: 3.6
-      env:
-        - ZMQ=
-        - TORNADO=4.5.*
-    - python: 2.7
-      env:
-        - ZMQ=
-        - TORNADO=4.5.*
-    - python: 3.5
-      env: ZMQ=libzmq
-    - python: 3.4
-      env: ZMQ=zeromq4-x
-    - python: 3.4
-      env: ZMQ=zeromq4-1
-    - python: 3.4
-      env: ZMQ=zeromq3-x
-    - python: 3.3
-      dist: trusty
-      env: ZMQ=
-    - python: nightly
-      env: ZMQ=
-    - python: nightly
-      env: ZMQ=bundled
-  allow_failures:
-    - env: ZMQ=libzmq
-    - python: nightly
-
+  
 script: travis_retry python setup.py test
