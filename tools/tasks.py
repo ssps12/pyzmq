@@ -74,8 +74,8 @@ py_exes = {
     #'2.7' : "/usr/local/bin/python2.7",
     #'3.5' : "/usr/local/bin/python3.5",
     #'3.6' : "/usr/local/bin/python3.6",
-    'pypy': "/usr/local/bin/pypy",
-    'pypy3': "/usr/local/bin/pypy3",
+    #'pypy': "/usr/local/bin/pypy",
+    #'pypy3': "/usr/local/bin/pypy3",
 }
 egg_pys = {} # no more eggs!
 
