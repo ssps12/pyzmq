@@ -176,7 +176,7 @@ def make_env(py_exe, *packages):
     py = pjoin(env, 'bin', 'python')
     # new env
     if not os.path.exists(py):
-        run('virtualenv {} -p {}'.format(
+        run('virtualenv {} -p 3.8'.format(
             pipes.quote(env),
             pipes.quote(py_exe),
         ))
