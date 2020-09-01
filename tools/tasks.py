@@ -204,7 +204,7 @@ def build_sdist(py, upload=False):
 def sdist(ctx, vs, upload=False):
     clone_repo(ctx)
     tag(ctx, vs, push=upload)
-    py = make_env(default_py, 'cython', 'twine', 'certifi', 'gcc', 'g++')
+    py = make_env(default_py, 'cython', 'twine', 'certifi', 'gcc')
     tarball = build_sdist(py, upload=upload)
     return untar(tarball)
 
