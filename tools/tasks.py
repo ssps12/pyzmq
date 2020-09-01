@@ -53,8 +53,8 @@ branch = os.getenv('PYZMQ_BRANCH', 'master')
 #        time.sleep(10)
 
 # Workaround for PyPy3 5.8
-if 'LDFLAGS' not in os.environ:
-    os.environ['LDFLAGS'] = '-undefined dynamic_lookup'
+#if 'LDFLAGS' not in os.environ:
+#    os.environ['LDFLAGS'] = '-undefined dynamic_lookup'
 
 # set mac deployment target
 #if 'MACOSX_DEPLOYMENT_TARGET' not in os.environ:
