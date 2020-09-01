@@ -254,8 +254,8 @@ def manylinux(ctx, vs, upload=False, pythons=manylinux_pys):
             run("git pull")
             run("git submodule update")
 
-    run("docker pull quay.io/pypa/manylinux1_x86_64")
-    run("docker pull quay.io/pypa/manylinux1_i686")
+    #run("docker pull quay.io/pypa/manylinux1_x86_64")
+    #run("docker pull quay.io/pypa/manylinux1_i686")
     run("docker pull quay.io/pypa/manylinux2014_aarch64")
     base_cmd = ' '.join([
         "docker",
@@ -275,8 +275,8 @@ def manylinux(ctx, vs, upload=False, pythons=manylinux_pys):
     ])
 
     with cd(manylinux):
-        run(base_cmd +  " quay.io/pypa/manylinux1_x86_64 /io/build_pyzmqs.sh")
-        run(base_cmd +  " quay.io/pypa/manylinux1_i686 linux32 /io/build_pyzmqs.sh")
+        #run(base_cmd +  " quay.io/pypa/manylinux1_x86_64 /io/build_pyzmqs.sh")
+        #run(base_cmd +  " quay.io/pypa/manylinux1_i686 linux32 /io/build_pyzmqs.sh")
         run(base_cmd +  " quay.io/pypa/manylinux2014_aarch64 linux /io/build_pyzmqs.sh")
     if upload:
         py = make_env(default_py, 'twine')
