@@ -122,6 +122,7 @@ def clone_repo(ctx, reset=False):
         run("git config --global user.name sakshi87")
         run("git remote set-url origin https://github.com/zeromq/pyzmq")
         run("git clone %s %s" % (repo, repo_root))
+        run ("sudo apt-get install -y gcc")
 
 @task
 def patch_version(ctx, vs):
