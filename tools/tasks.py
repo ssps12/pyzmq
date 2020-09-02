@@ -81,7 +81,7 @@ egg_pys = {} # no more eggs!
 
 default_py = '3.7'
 # all the Python versions to be built on linux
-manylinux_pys = '3.8 3.7 2.7 3.5 3.6'
+manylinux_pys = '3.8 3.7 3.6'
 
 tmp = "/tmp"
 env_root = os.path.join(tmp, 'envs')
