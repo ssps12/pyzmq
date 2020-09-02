@@ -308,15 +308,15 @@ def release(ctx, vs, upload=False):
 
     manylinux(ctx, vs, upload=upload)
     if upload:
-        print("When AppVeyor finished building, upload artifacts with:")
-        print("  invoke appveyor-artifacts {} --upload".format(vs))
+        print("When Travis finished building, upload artifacts with:")
+        print("  invoke Travis-artifacts {} --upload".format(vs))
 
 
-_appveyor_api = 'https://ci.appveyor.com/api'
-_appveyor_project = 'minrk/pyzmq'
-def _appveyor_api_request(path):
-    """Make an appveyor API request"""
-    r = requests.get('{}/{}'.format(_appveyor_api, path),
+_travis_api = 'https://ci.travis.com/api'
+_travis_project = 'minrk/pyzmq'
+def _travis_api_request(path):
+    """Make an travis API request"""
+    r = requests.get('{}/{}'.format(_travis_api, path),
         headers={
             # 'Authorization': 'Bearer %s' % token,
             'Content-Type': 'application/json',
@@ -327,21 +327,21 @@ def _appveyor_api_request(path):
 
 
 @task
-def appveyor_artifacts(ctx, vs, dest='win-dist', upload=False):
-    """Download appveyor artifacts
+def travis_artifacts(ctx, vs, dest='win-dist', upload=False):
+    """Download travis artifacts
 
     If --upload is given, upload to PyPI
     """
     if not os.path.exists(dest):
         os.makedirs(dest)
 
-    build = _appveyor_api_request('projects/{}/branch/v{}'.format(_appveyor_project, vs))
+    build = _travis_api_request('projects/{}/branch/v{}'.format(_travis_project, vs))
     jobs = build['build']['jobs']
-    artifact_urls = []
+    travis_urls = []
     for job in jobs:
-        artifacts = _appveyor_api_request('buildjobs/{}/artifacts'.format(job['jobId']))
+        artifacts = _travis_api_request('buildjobs/{}/artifacts'.format(job['jobId']))
         artifact_urls.extend('{}/buildjobs/{}/artifacts/{}'.format(
-            _appveyor_api, job['jobId'], artifact['fileName']
+            _travis_api, job['jobId'], artifact['fileName']
         ) for artifact in artifacts)
     for url in artifact_urls:
         print("Downloading {} to {}".format(url, dest))
