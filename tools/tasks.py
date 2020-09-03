@@ -190,11 +190,10 @@ def make_env(py_exe, *packages):
     py = pjoin(env, 'bin', 'python')
     # new env
     if not os.path.exists(py):
-        run('virtualenv {} -p /home/travis/virtualenv/python3.7.5/bin/python'.format(
+        run('virtualenv {} -p {}'.format(
             pipes.quote(env),
             pipes.quote(py_exe),
         ))
-        #print ("Value of path isssssssssss :")
         py = pjoin(env, 'bin', 'python')
         run([py, '-V'])
         install(py, 'pip', 'setuptools')
