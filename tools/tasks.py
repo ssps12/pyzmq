@@ -55,12 +55,14 @@ if platform.processor() != 'aarch64' :
             time.sleep(10)
 
 # Workaround for PyPy3 5.8
-#if 'LDFLAGS' not in os.environ:
-#    os.environ['LDFLAGS'] = '-undefined dynamic_lookup'
+if platform.processor() != 'aarch64' :
+    if 'LDFLAGS' not in os.environ:
+        os.environ['LDFLAGS'] = '-undefined dynamic_lookup'
 
 # set mac deployment target
-#if 'MACOSX_DEPLOYMENT_TARGET' not in os.environ:
-#    os.environ['MACOSX_DEPLOYMENT_TARGET'] = '10.9'
+if platform.processor() != 'aarch64' :
+    if 'MACOSX_DEPLOYMENT_TARGET' not in os.environ:
+        os.environ['MACOSX_DEPLOYMENT_TARGET'] = '10.9'
 
 # set compiler env (avoids issues with missing 'gcc-4.2' on py27, etc.)
 if 'CC' not in os.environ:
@@ -69,21 +71,31 @@ if 'CC' not in os.environ:
 if 'CXX' not in os.environ:
     os.environ['CXX'] = 'clang++'
 
-#_framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
-py_exes = {
-    #'3.8' : "/home/travis/virtualenv/python3.8.0/bin/python",
-    '3.7' : "/home/travis/virtualenv/python3.7.5/bin/python",
-    #'2.7' : "/usr/local/bin/python2.7",
-    #'3.5' : "/usr/local/bin/python3.5",
-    #'3.6' : "/usr/local/bin/python3.6",
-    #'pypy': "/usr/local/bin/pypy",
-    #'pypy3': "/usr/local/bin/pypy3",
-}
+if platform.processor() != 'aarch64' :    
+    _framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
+    py_exes = {
+        '3.8' : _framework_py('3.8'),
+        '3.7' : _framework_py('3.7'),
+        '2.7' : _framework_py('2.7'),
+        '3.5' : _framework_py('3.5'),
+        '3.6' : _framework_py('3.6'),
+        'pypy': "/usr/local/bin/pypy",
+        'pypy3': "/usr/local/bin/pypy3",
+    }
+else:
+    py_exes = {
+        '3.8' : "/home/travis/virtualenv/python3.8.0/bin/python",
+        '3.7' : "/home/travis/virtualenv/python3.7.5/bin/python",
+    }
+    
 egg_pys = {} # no more eggs!
 
 default_py = '3.7'
 # all the Python versions to be built on linux
-manylinux_pys = '3.8 3.7 3.6'
+if platform.processor() != 'aarch64' :
+    manylinux_pys = '3.8 3.7 2.7 3.5 3.6'
+else:
+    manylinux_pys = '3.8 3.7 3.5 3.6'
 
 tmp = "/tmp"
 env_root = os.path.join(tmp, 'envs')
@@ -124,7 +136,6 @@ def clone_repo(ctx, reset=False):
         run("git config --global user.name sakshi87")
         run("git remote set-url origin https://github.com/zeromq/pyzmq")
         run("git clone %s %s" % (repo, repo_root))
-        run ("sudo apt-get install -y gcc")
 
 @task
 def patch_version(ctx, vs):
