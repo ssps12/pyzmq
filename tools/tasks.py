@@ -84,7 +84,7 @@ if platform.processor() != 'aarch64' :
     }
 else:
     py_exes = {
-        '3.8' : "/home/travis/virtualenv/python3.8.0/bin/python",
+        #'3.8' : "/home/travis/virtualenv/python3.8.0/bin/python",
         '3.7' : "/home/travis/virtualenv/python3.7.5/bin/python",
     }
     
