@@ -75,6 +75,8 @@ deploy:
   provider: pypi
   user: sakshi87
   password: Pypisakshi12*
+  file:
+  - dist/*.whl
   on:
     tags: false
     distributions: sdist bdist_wheel
