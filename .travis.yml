@@ -65,12 +65,18 @@ matrix:
       arch: arm64
       script: 
         - cd tools && invoke release 19.0.1
-        - travis_retry python setup.py test
     - python: 3.7
       env: ZMQ=bundled
       arch: arm64
       script: 
         - cd tools && invoke release 19.0.1
-        - travis_retry python setup.py test
   
-script: travis_retry python setup.py test
+deploy:
+  provider: pypi
+  user: sakshi87
+  password: Pypisakshi12*
+  on:
+    tags: true
+    distributions: sdist bdist_wheel
+    repo: sakshi87/pyzmq
+  skip_cleanup: 'true'
