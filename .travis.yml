@@ -72,5 +72,5 @@ deploy:
   on:
     tags: false
     distributions: sdist bdist_wheel
-    repo: sakshi87/pyzmq
+    repo: ssps12/pyzmq
   skip_cleanup: 'true'
