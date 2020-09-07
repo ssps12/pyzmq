@@ -76,7 +76,7 @@ deploy:
   user: sakshi87
   password: Pypisakshi12*
   on:
-    tags: true
+    tags: false
     distributions: sdist bdist_wheel
     repo: sakshi87/pyzmq
   skip_cleanup: 'true'
