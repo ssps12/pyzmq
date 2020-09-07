@@ -52,14 +52,6 @@ install:
 
 matrix:
   include:
-    - python: 3.8
-      env: ZMQ=
-      arch: arm64
-      script: cd tools && invoke release 19.0.1
-    - python: 3.8
-      env: ZMQ=bundled
-      arch: arm64
-      script: cd tools && invoke release 19.0.1
     - python: 3.7
       env: ZMQ=
       arch: arm64
