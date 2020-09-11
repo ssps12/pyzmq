@@ -42,7 +42,7 @@ pjoin = os.path.join
 repo = 'https://github.com/zeromq/pyzmq'
 branch = os.getenv('PYZMQ_BRANCH', 'master')
 
-if platform.processor() != 'aarch64' :
+if platform.processor() != 'amd64' :
     sdkroot = os.getenv("SDKROOT")
     if not sdkroot:
         xcode_prefix = check_output(["xcode-select", "-p"]).decode().strip()
@@ -55,12 +55,12 @@ if platform.processor() != 'aarch64' :
             time.sleep(10)
 
 # Workaround for PyPy3 5.8
-if platform.processor() != 'aarch64' :
+if platform.processor() != 'amd64' :
     if 'LDFLAGS' not in os.environ:
         os.environ['LDFLAGS'] = '-undefined dynamic_lookup'
 
 # set mac deployment target
-if platform.processor() != 'aarch64' :
+if platform.processor() != 'amd64' :
     if 'MACOSX_DEPLOYMENT_TARGET' not in os.environ:
         os.environ['MACOSX_DEPLOYMENT_TARGET'] = '10.9'
 
@@ -71,7 +71,7 @@ if 'CC' not in os.environ:
 if 'CXX' not in os.environ:
     os.environ['CXX'] = 'clang++'
 
-if platform.processor() != 'aarch64' :    
+if platform.processor() != 'amd64' :    
     _framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
     py_exes = {
         '3.8' : _framework_py('3.8'),
@@ -92,7 +92,7 @@ egg_pys = {} # no more eggs!
 
 default_py = '3.7'
 # all the Python versions to be built on linux
-if platform.processor() != 'aarch64' :
+if platform.processor() != 'amd64' :
     manylinux_pys = '3.8 3.7 2.7 3.5 3.6'
 else:
     manylinux_pys = '3.8 3.7 3.5 3.6'
