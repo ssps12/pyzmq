@@ -70,15 +70,3 @@ matrix:
       env: ZMQ=bundled
       script: 
         - cd tools && invoke release 19.0.1
-  
-deploy:
-  provider: pypi
-  user: sakshi87
-  password: Pypisakshi12*
-  file:
-  - *.whl
-  on:
-    tags: false
-    distributions: sdist bdist_wheel
-    repo: ssps12/pyzmq
-  skip_cleanup: 'true'
