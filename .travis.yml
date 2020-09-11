@@ -62,6 +62,14 @@ matrix:
       arch: arm64
       script: 
         - cd tools && invoke release 19.0.1
+    - python: 3.7
+      env: ZMQ= 
+      script: 
+        - cd tools && invoke release 19.0.1
+    - python: 3.7
+      env: ZMQ=bundled
+      script: 
+        - cd tools && invoke release 19.0.1
   
 deploy:
   provider: pypi
