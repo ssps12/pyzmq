@@ -85,7 +85,7 @@ if platform.processor() != 'x86_64' :
 else:
     py_exes = {
         #'3.8' : "/home/travis/virtualenv/python3.8.0/bin/python",
-        '3.7' : "/home/travis/virtualenv/python3.7.5/bin/python",
+        '3.7' : "/home/travis/virtualenv/python3.7.1/bin/python",
     }
     
 egg_pys = {} # no more eggs!
