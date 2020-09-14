@@ -268,7 +268,6 @@ def manylinux(ctx, vs, upload=False, pythons=manylinux_pys):
             
     if platform.processor() != 'aarch64' :
         run("docker pull quay.io/pypa/manylinux1_x86_64")
-        run("docker pull quay.io/pypa/manylinux1_i686")
     else:
         run("docker pull quay.io/pypa/manylinux2014_aarch64")
     base_cmd = ' '.join([
@@ -291,7 +290,6 @@ def manylinux(ctx, vs, upload=False, pythons=manylinux_pys):
     with cd(manylinux):
         if platform.processor() != 'aarch64' :
             run(base_cmd +  " quay.io/pypa/manylinux1_x86_64 /io/build_pyzmqs.sh")
-            run(base_cmd +  " quay.io/pypa/manylinux1_i686 linux32 /io/build_pyzmqs.sh")
         else:
             run(base_cmd +  " quay.io/pypa/manylinux2014_aarch64 /io/build_pyzmqs.sh")
             #with cd('/root/.cache/pip/wheels/cc/d6/c3/3811893eede041ee1275441549ab1296b08833eb5eef478818')
