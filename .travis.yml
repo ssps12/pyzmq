@@ -70,3 +70,5 @@ matrix:
       env: ZMQ=bundled
       script: 
         - cd tools && invoke release 19.0.1
+        
+script: travis_retry python setup.py test        
