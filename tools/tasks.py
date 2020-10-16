@@ -293,6 +293,8 @@ def manylinux(ctx, vs, upload=False, pythons=manylinux_pys):
         else:
             run(base_cmd +  " quay.io/pypa/manylinux2014_aarch64 /io/build_pyzmqs.sh")
             run(['pwd'])
+            run(['cd', '/io'])
+            run(['ls'])
             run(['cd', '/tmp/manylinux-builds/wheelhouse'])
             run(['unzip', '/tmp/manylinux-builds/wheelhouse/*.whl'])
             run(['tox', '--installpkg', '/tmp/manylinux-builds/wheelhouse/*.whl'])
