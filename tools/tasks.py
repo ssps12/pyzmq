@@ -298,7 +298,7 @@ def manylinux(ctx, vs, upload=False, pythons=manylinux_pys):
             #run(['cd', '/tmp/manylinux-builds/wheelhouse'])
             #run(['unzip', '/tmp/manylinux-builds/wheelhouse/*.whl'])
             #run(['python', '-m', 'pip', 'install', 'tox'])
-            run(['pip', 'install', '/tmp/manylinux-builds/wheelhouse/pyzmq-19.0.1-cp38-cp38-manylinux2014_aarch64.whl'])
+            run(['pip', 'install', '/tmp/manylinux-builds/wheelhouse/pyzmq-19.0.1-cp37-cp37m-manylinux2014_aarch64.whl'])
             run(['ls'])
             run(['python', 'setup.py', 'test'])
             #/io/wheelhouse/pyzmq-19.0.1-cp38-cp38-manylinux2014_aarch64.whl
