@@ -57,22 +57,27 @@ matrix:
       arch: arm64
       script: 
         - cd tools && invoke release 19.0.1
+        - pwd
         - travis_retry python setup.py test 
     - python: 3.7
       env: ZMQ=bundled
       arch: arm64
       script: 
         - cd tools && invoke release 19.0.1
+        - pwd
         - travis_retry python setup.py test 
     - python: 3.7
       env: ZMQ= 
       script: 
         - cd tools && invoke release 19.0.1
+        - pwd
         - travis_retry python setup.py test 
     - python: 3.7
       env: ZMQ=bundled
       script: 
         - cd tools && invoke release 19.0.1
+        - pwd
+        - cd ../
         - travis_retry python setup.py test 
         
 script: travis_retry python setup.py test        
