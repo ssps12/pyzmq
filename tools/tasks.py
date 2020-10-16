@@ -290,11 +290,10 @@ def manylinux(ctx, vs, upload=False, pythons=manylinux_pys):
     with cd(manylinux):
         if platform.processor() != 'aarch64' :
             run(base_cmd +  " quay.io/pypa/manylinux1_x86_64 /io/build_pyzmqs.sh")
-            whereis *.whl
         else:
             run(base_cmd +  " quay.io/pypa/manylinux2014_aarch64 /io/build_pyzmqs.sh")
-            run(['auditwheel', 'dist/*'])
-            run(['tox', '--installpkg', 'wheelhouse/*'])
+            run(['auditwheel', 'dist/*.whl'])
+            run(['tox', '--installpkg', 'wheelhouse/*.whl'])
             #with cd('/root/.cache/pip/wheels/cc/d6/c3/3811893eede041ee1275441549ab1296b08833eb5eef478818')
             #unzip pyzmq-19.0.1-cp38-cp38-linux_aarch64.whl
             #ls
