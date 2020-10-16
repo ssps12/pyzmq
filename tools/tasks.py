@@ -297,6 +297,7 @@ def manylinux(ctx, vs, upload=False, pythons=manylinux_pys):
             #run(['ls'])
             #run(['cd', '/tmp/manylinux-builds/wheelhouse'])
             #run(['unzip', '/tmp/manylinux-builds/wheelhouse/*.whl'])
+            run(['py', '-m', 'pip', 'install', 'tox'])
             run(['tox', '--installpkg', '/tmp/manylinux-builds/wheelhouse/*.whl'])
             run(['ls'])
             run(['py', 'setup.py', 'test'])
