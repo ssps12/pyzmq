@@ -87,9 +87,6 @@ elif platform.processor() == 'aarch64':
         #'3.8' : "/home/travis/virtualenv/python3.8.0/bin/python"
         '3.7' : "home/travis/virtualenv/python3.7.5/bin/python",
     }
-    run(['which', 'python'])
-    run(['which', 'python3.7'])
-    run(['which', 'py'])
 else:
     py_exes = {
         #'3.8' : "/home/travis/virtualenv/python3.8.0/bin/python",
@@ -119,6 +116,9 @@ def run(cmd, **kwargs):
         cmd = " ".join(pipes.quote(s) for s in cmd)
     kwargs.setdefault('echo', True)
     return invoke_run(cmd, **kwargs)
+run(['which', 'python'])
+run(['which', 'python3.7'])
+run(['which', 'py'])
 
 @contextmanager
 def cd(path):
