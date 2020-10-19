@@ -85,8 +85,7 @@ if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
 elif platform.processor() == 'aarch64':
     py_exes = {
         #'3.8' : "/home/travis/virtualenv/python3.8.0/bin/python"
-        run(['which', 'python'])
-        run(['which', 'python3.7'])
+        run(['which', 'py'])
         '3.7' : "home/travis/virtualenv/python3.7.5/bin/python",
     }
 else:
