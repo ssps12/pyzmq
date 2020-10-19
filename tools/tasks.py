@@ -116,9 +116,9 @@ def run(cmd, **kwargs):
         cmd = " ".join(pipes.quote(s) for s in cmd)
     kwargs.setdefault('echo', True)
     return invoke_run(cmd, **kwargs)
-run(['which', 'python'])
-run(['which', 'python3.7'])
-run(['which', 'py'])
+#run(['which', 'python'])
+#run(['which', 'python3.7'])
+#run(['which', 'py'])
 
 @contextmanager
 def cd(path):
@@ -175,7 +175,7 @@ def patch_version(ctx, vs):
 
 @task
 #def tag(ctx, vs, push=False):
-    """Make the tag (don't push)"""
+#    """Make the tag (don't push)"""
 #    patch_version(ctx, vs)
 #    with cd(repo_root):
 #        run('git commit -a -m "release 22.1.1"'.format(vs))
