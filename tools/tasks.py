@@ -174,15 +174,15 @@ def patch_version(ctx, vs):
             f.write(line)
 
 @task
-def tag(ctx, vs, push=False):
+#def tag(ctx, vs, push=False):
     """Make the tag (don't push)"""
-    patch_version(ctx, vs)
-    with cd(repo_root):
-        run('git commit -a -m "release 22.1.1"'.format(vs))
-        run('git tag -a -m "release 22.1.1" v22.1.1'.format(vs))
-        if push:
-            run('git push --tags')
-            run('git push')
+#    patch_version(ctx, vs)
+#    with cd(repo_root):
+#        run('git commit -a -m "release 22.1.1"'.format(vs))
+#        run('git tag -a -m "release 22.1.1" v22.1.1'.format(vs))
+#        if push:
+#            run('git push --tags')
+#            run('git push')
 
 def make_env(py_exe, *packages):
     """Make a virtualenv
@@ -224,7 +224,6 @@ def build_sdist(py, upload=False):
 @task
 def sdist(ctx, vs, upload=False):
     clone_repo(ctx)
-    tag(ctx, vs, push=upload)
     py = make_env(default_py, 'cython', 'twine', 'certifi')
     tarball = build_sdist(py, upload=upload)
     return untar(tarball)
