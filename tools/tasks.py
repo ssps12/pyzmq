@@ -82,7 +82,7 @@ elif platform.processor() == 'aarch64' or platform.processor() == 'x86_64':
     py_exes = {
         '3.7' : "python",
     }
-else
+else :
     time.sleep(10)
 
 egg_pys = {} # no more eggs!
