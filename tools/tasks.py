@@ -38,7 +38,7 @@ pjoin = os.path.join
 repo = 'https://github.com/zeromq/pyzmq'
 branch = os.getenv('PYZMQ_BRANCH', 'master')
 
-if platform.processor() == 'osx' :
+if platform.processor() == 'macosx' :
     sdkroot = os.getenv("SDKROOT")
     if not sdkroot:
         xcode_prefix = check_output(["xcode-select", "-p"]).decode().strip()
@@ -74,7 +74,7 @@ def run(cmd, **kwargs):
     kwargs.setdefault('echo', True)
     return invoke_run(cmd, **kwargs)    
 
-if platform.processor() == 'osx':
+if platform.processor() == 'macosx':
     _framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
     py_exes = {
         '3.8' : _framework_py('3.8'),
