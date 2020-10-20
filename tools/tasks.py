@@ -173,7 +173,6 @@ def patch_version(ctx, vs):
         for line in post_lines:
             f.write(line)
 
-@task
 #def tag(ctx, vs, push=False):
 #    """Make the tag (don't push)"""
 #    patch_version(ctx, vs)
@@ -184,6 +183,7 @@ def patch_version(ctx, vs):
 #            run('git push --tags')
 #            run('git push')
 
+@task
 def make_env(py_exe, *packages):
     """Make a virtualenv
 
