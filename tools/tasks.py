@@ -67,6 +67,13 @@ if 'CC' not in os.environ:
 if 'CXX' not in os.environ:
     os.environ['CXX'] = 'clang++'
 
+def run(cmd, **kwargs):
+    """wrapper around invoke.run that accepts a Popen list"""
+    if isinstance(cmd, list):
+        cmd = " ".join(pipes.quote(s) for s in cmd)
+    kwargs.setdefault('echo', True)
+    return invoke_run(cmd, **kwargs)    
+
 if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
     _framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
     py_exes = {
@@ -80,7 +87,7 @@ if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
    }
 elif platform.processor() == 'aarch64' or platform.processor() == 'x86_64':
     py_exes = {
-        '3.7' : "python",
+        '3.7' : run(['which', 'python']),
     }
 else :
     time.sleep(10)
@@ -101,13 +108,6 @@ sdist_root = pjoin(tmp, 'pyzmq-sdist')
 
 def _py(py):
     return py_exes[py]
-
-def run(cmd, **kwargs):
-    """wrapper around invoke.run that accepts a Popen list"""
-    if isinstance(cmd, list):
-        cmd = " ".join(pipes.quote(s) for s in cmd)
-    kwargs.setdefault('echo', True)
-    return invoke_run(cmd, **kwargs)
 
 @contextmanager
 def cd(path):
