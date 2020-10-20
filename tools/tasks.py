@@ -74,9 +74,7 @@ def run(cmd, **kwargs):
     kwargs.setdefault('echo', True)
     return invoke_run(cmd, **kwargs)    
 
-if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
-    processor=platform.processor()
-    print("what is the value on mac" % (processor))
+if platform.processor() == 'osx':
     _framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
     py_exes = {
         '3.8' : _framework_py('3.8'),
