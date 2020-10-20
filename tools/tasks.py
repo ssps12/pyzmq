@@ -38,7 +38,7 @@ pjoin = os.path.join
 repo = 'https://github.com/zeromq/pyzmq'
 branch = os.getenv('PYZMQ_BRANCH', 'master')
 
-if platform.processor() == 'macosx' :
+if platform.processor() == 'macos' :
     sdkroot = os.getenv("SDKROOT")
     if not sdkroot:
         xcode_prefix = check_output(["xcode-select", "-p"]).decode().strip()
@@ -51,12 +51,12 @@ if platform.processor() == 'macosx' :
             time.sleep(10)
 
 # Workaround for PyPy3 5.8
-if platform.processor() == 'osx' :
+if platform.processor() == 'macos' :
     if 'LDFLAGS' not in os.environ:
         os.environ['LDFLAGS'] = '-undefined dynamic_lookup'
 
 # set mac deployment target
-if platform.processor() == 'osx' :
+if platform.processor() == 'macos' :
     if 'MACOSX_DEPLOYMENT_TARGET' not in os.environ:
         os.environ['MACOSX_DEPLOYMENT_TARGET'] = '10.9'
 
@@ -74,7 +74,7 @@ def run(cmd, **kwargs):
     kwargs.setdefault('echo', True)
     return invoke_run(cmd, **kwargs)    
 
-if platform.processor() == 'macosx':
+if platform.processor() == 'macos':
     _framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
     py_exes = {
         '3.8' : _framework_py('3.8'),
