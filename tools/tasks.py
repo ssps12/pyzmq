@@ -75,6 +75,7 @@ def run(cmd, **kwargs):
     return invoke_run(cmd, **kwargs)    
 
 if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
+    return platform.processor()
     _framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
     py_exes = {
         '3.8' : _framework_py('3.8'),
