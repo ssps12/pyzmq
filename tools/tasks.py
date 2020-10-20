@@ -38,7 +38,7 @@ pjoin = os.path.join
 repo = 'https://github.com/zeromq/pyzmq'
 branch = os.getenv('PYZMQ_BRANCH', 'master')
 
-if platform.processor() == 'macos' :
+if platform.processor() == '' :
     sdkroot = os.getenv("SDKROOT")
     if not sdkroot:
         xcode_prefix = check_output(["xcode-select", "-p"]).decode().strip()
@@ -87,7 +87,7 @@ if platform.processor() == 'macos':
    }
 elif platform.processor() == 'aarch64':
     py_exes = {
-        '3.7' : "/home/travis/virtualenv/python3.7.5/bin/python",
+        '3.7' : str(run(['which', 'python'])),
     }
 else:
     py_exes = {
