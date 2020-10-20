@@ -83,8 +83,7 @@ elif platform.processor() == 'aarch64' or platform.processor() == 'x86_64':
         '3.7' : "python",
     }
 else
-   print("Not supported platform")
-   time.sleep(10)
+    time.sleep(10)
 
 egg_pys = {} # no more eggs!
 
