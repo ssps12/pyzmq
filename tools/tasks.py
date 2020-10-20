@@ -1,13 +1,9 @@
 #!/usr/bin/env python
 """
 invoke script for releasing pyzmq
-
 Must be run on macOS with Framework Python from Python.org
-
 usage:
-
     invoke release 14.3.1
-
 """
 
 # Copyright (C) PyZMQ Developers
@@ -18,8 +14,8 @@ from __future__ import print_function
 
 import glob
 import os
-import platform
 import pipes
+import platform
 import re
 import shutil
 from subprocess import check_output
@@ -71,7 +67,7 @@ if 'CC' not in os.environ:
 if 'CXX' not in os.environ:
     os.environ['CXX'] = 'clang++'
 
-if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':    
+if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
     _framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
     py_exes = {
         '3.8' : _framework_py('3.8'),
@@ -81,18 +77,15 @@ if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
         '3.6' : _framework_py('3.6'),
         'pypy': "/usr/local/bin/pypy",
         'pypy3': "/usr/local/bin/pypy3",
-    }
+   }
 elif platform.processor() == 'aarch64':
     py_exes = {
-        #'3.8' : "/home/travis/virtualenv/python3.8.0/bin/python"
-        '3.7' : "home/travis/virtualenv/python3.7.5/bin/python",
+        '3.7' : "/home/travis/virtualenv/python3.7.5/bin/python",
     }
 else:
     py_exes = {
-        #'3.8' : "/home/travis/virtualenv/python3.8.0/bin/python",
         '3.7' : "/home/travis/virtualenv/python3.7.1/bin/python",
     }
-    
 egg_pys = {} # no more eggs!
 
 default_py = '3.7'
@@ -116,9 +109,6 @@ def run(cmd, **kwargs):
         cmd = " ".join(pipes.quote(s) for s in cmd)
     kwargs.setdefault('echo', True)
     return invoke_run(cmd, **kwargs)
-#run(['which', 'python'])
-#run(['which', 'python3.7'])
-#run(['which', 'py'])
 
 @contextmanager
 def cd(path):
@@ -140,10 +130,9 @@ def clone_repo(ctx, reset=False):
             run("git checkout %s" % branch)
             run("git pull")
     else:
-        run("git config --global user.email sakshi.sharma@puresoftware.com")
-        run("git config --global user.name sakshi87")
-        run("git remote set-url origin https://github.com/zeromq/pyzmq")
-        run("git clone %s %s" % (repo, repo_root))
+        run("git config --global user.email odidev@puresoftware.com")
+        run("git config --global user.name odidev")
+        run("git clone -b %s %s %s" % (branch, repo, repo_root))
 
 @task
 def patch_version(ctx, vs):
@@ -173,20 +162,19 @@ def patch_version(ctx, vs):
         for line in post_lines:
             f.write(line)
 
+@task
 def tag(ctx, vs, push=False):
     """Make the tag (don't push)"""
     patch_version(ctx, vs)
     with cd(repo_root):
-#        run('git commit -a -m "release 22.1.1"'.format(vs))
-#        run('git tag -a -m "release 22.1.1" v22.1.1'.format(vs))
+        run('git commit -a -m "release {}"'.format(vs))
+        run('git tag -a -m "release {0}" v{0}'.format(vs))
         if push:
             run('git push --tags')
             run('git push')
 
-@task
 def make_env(py_exe, *packages):
     """Make a virtualenv
-
     Assumes `which python` has the `virtualenv` package
     """
     py_exe = py_exes.get(py_exe, py_exe)
@@ -210,7 +198,6 @@ def make_env(py_exe, *packages):
 
 def build_sdist(py, upload=False):
     """Build sdists
-
     Returns the path to the tarball
     """
     with cd(repo_root):
@@ -273,11 +260,12 @@ def manylinux(ctx, vs, upload=False, pythons=manylinux_pys):
         with cd(manylinux):
             run("git pull")
             run("git submodule update")
-            
-    if platform.processor() != 'aarch64' :
-        run("docker pull quay.io/pypa/manylinux1_x86_64")
-    else:
+    if platform.processor() != 'aarch64' and platform.processor() != 'x86_64': 
+        run("docker pull quay.io/pypa/manylinux1_i686")
+    elif platform.processor() == 'aarch64':
         run("docker pull quay.io/pypa/manylinux2014_aarch64")
+    else:
+        run("docker pull quay.io/pypa/manylinux1_x86_64")
     base_cmd = ' '.join([
         "docker",
         "run",
@@ -296,23 +284,12 @@ def manylinux(ctx, vs, upload=False, pythons=manylinux_pys):
     ])
 
     with cd(manylinux):
-        if platform.processor() != 'aarch64' :
-            run(base_cmd +  " quay.io/pypa/manylinux1_x86_64 /io/build_pyzmqs.sh")
-        else:
+        if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
+            run(base_cmd +  " quay.io/pypa/manylinux1_i686 linux32 /io/build_pyzmqs.sh")
+        elif platform.processor() == 'aarch64':
             run(base_cmd +  " quay.io/pypa/manylinux2014_aarch64 /io/build_pyzmqs.sh")
-            #run(['pwd'])
-            #run(['cd', '/io'])
-            #run(['ls'])
-            #run(['cd', '/tmp/manylinux-builds/wheelhouse'])
-            #run(['unzip', '/tmp/manylinux-builds/wheelhouse/*.whl'])
-            #run(['python', '-m', 'pip', 'install', 'tox'])
-            run(['pip', 'install', '/tmp/manylinux-builds/wheelhouse/pyzmq-19.0.1-cp37-cp37m-manylinux2014_aarch64.whl'])
-            #run(['ls'])
-            #run(['python', 'setup.py', 'test'])
-            #/io/wheelhouse/pyzmq-19.0.1-cp38-cp38-manylinux2014_aarch64.whl
-            #with cd('/root/.cache/pip/wheels/cc/d6/c3/3811893eede041ee1275441549ab1296b08833eb5eef478818')
-            #unzip pyzmq-19.0.1-cp38-cp38-linux_aarch64.whl
-            #ls
+        else:
+            run(base_cmd +  " quay.io/pypa/manylinux1_x86_64 /io/build_pyzmqs.sh")
     if upload:
         py = make_env(default_py, 'twine')
         run(['twine', 'upload', os.path.join(manylinux, 'wheelhouse', '*')])
@@ -325,7 +302,6 @@ def release(ctx, vs, upload=False):
     for v, path in py_exes.items():
         if not os.path.exists(path):
             raise ValueError("Need %s at %s" % (v, path))
-            
 
     # start from scrach with clone and envs
     clone_repo(ctx, reset=True)
@@ -343,15 +319,15 @@ def release(ctx, vs, upload=False):
 
     manylinux(ctx, vs, upload=upload)
     if upload:
-        print("When Travis finished building, upload artifacts with:")
-        print("  invoke Travis-artifacts {} --upload".format(vs))
+        print("When AppVeyor finished building, upload artifacts with:")
+        print("  invoke appveyor-artifacts {} --upload".format(vs))
 
 
-_travis_api = 'https://ci.travis.com/api'
-_travis_project = 'minrk/pyzmq'
-def _travis_api_request(path):
-    """Make an travis API request"""
-    r = requests.get('{}/{}'.format(_travis_api, path),
+_appveyor_api = 'https://ci.appveyor.com/api'
+_appveyor_project = 'minrk/pyzmq'
+def _appveyor_api_request(path):
+    """Make an appveyor API request"""
+    r = requests.get('{}/{}'.format(_appveyor_api, path),
         headers={
             # 'Authorization': 'Bearer %s' % token,
             'Content-Type': 'application/json',
@@ -362,21 +338,20 @@ def _travis_api_request(path):
 
 
 @task
-def travis_artifacts(ctx, vs, dest='win-dist', upload=False):
-    """Download travis artifacts
-
+def appveyor_artifacts(ctx, vs, dest='win-dist', upload=False):
+    """Download appveyor artifacts
     If --upload is given, upload to PyPI
     """
     if not os.path.exists(dest):
         os.makedirs(dest)
 
-    build = _travis_api_request('projects/{}/branch/v{}'.format(_travis_project, vs))
+    build = _appveyor_api_request('projects/{}/branch/v{}'.format(_appveyor_project, vs))
     jobs = build['build']['jobs']
-    travis_urls = []
+    artifact_urls = []
     for job in jobs:
-        artifacts = _travis_api_request('buildjobs/{}/artifacts'.format(job['jobId']))
+        artifacts = _appveyor_api_request('buildjobs/{}/artifacts'.format(job['jobId']))
         artifact_urls.extend('{}/buildjobs/{}/artifacts/{}'.format(
-            _travis_api, job['jobId'], artifact['fileName']
+            _appveyor_api, job['jobId'], artifact['fileName']
         ) for artifact in artifacts)
     for url in artifact_urls:
         print("Downloading {} to {}".format(url, dest))
@@ -392,4 +367,3 @@ def travis_artifacts(ctx, vs, dest='win-dist', upload=False):
     else:
         print("You can now upload these wheels with: ")
         print("  twine upload {}/*".format(dest))
-
