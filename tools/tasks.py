@@ -37,8 +37,7 @@ pjoin = os.path.join
 
 repo = 'https://github.com/zeromq/pyzmq'
 branch = os.getenv('PYZMQ_BRANCH', 'master')
-
-if platform.processor() == '' :
+if platform.processor() != 'aarch64' and platform.processor() != 'x86_64' :
     sdkroot = os.getenv("SDKROOT")
     if not sdkroot:
         xcode_prefix = check_output(["xcode-select", "-p"]).decode().strip()
@@ -51,12 +50,12 @@ if platform.processor() == '' :
             time.sleep(10)
 
 # Workaround for PyPy3 5.8
-if platform.processor() == 'macos' :
+if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
     if 'LDFLAGS' not in os.environ:
         os.environ['LDFLAGS'] = '-undefined dynamic_lookup'
 
 # set mac deployment target
-if platform.processor() == 'macos' :
+if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
     if 'MACOSX_DEPLOYMENT_TARGET' not in os.environ:
         os.environ['MACOSX_DEPLOYMENT_TARGET'] = '10.9'
 
@@ -67,39 +66,30 @@ if 'CC' not in os.environ:
 if 'CXX' not in os.environ:
     os.environ['CXX'] = 'clang++'
 
-def run(cmd, **kwargs):
-    """wrapper around invoke.run that accepts a Popen list"""
-    if isinstance(cmd, list):
-        cmd = " ".join(pipes.quote(s) for s in cmd)
-    kwargs.setdefault('echo', True)
-    return invoke_run(cmd, **kwargs)    
-
-if platform.processor() == 'macos':
+if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
     _framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
     py_exes = {
-        '3.8' : _framework_py('3.8'),
-        '3.7' : _framework_py('3.7'),
-        '2.7' : _framework_py('2.7'),
-        '3.5' : _framework_py('3.5'),
-        '3.6' : _framework_py('3.6'),
-        'pypy': "/usr/local/bin/pypy",
-        'pypy3': "/usr/local/bin/pypy3",
+        "3.9": _framework_py("3.9"),
+        "3.8": _framework_py("3.8"),
+        "3.7": _framework_py("3.7"),
+        "3.5": _framework_py("3.5"),
+        "3.6": _framework_py("3.6"),
+        "pypy": "/usr/local/bin/pypy",
+        "pypy3": "/usr/local/bin/pypy3",
    }
 elif platform.processor() == 'aarch64':
     py_exes = {
-        '3.7' : str(run(['which', 'python'])),
+        '3.7' : "/home/travis/virtualenv/python3.7.5/bin/python",
     }
 else:
     py_exes = {
         '3.7' : "/home/travis/virtualenv/python3.7.1/bin/python",
     }
 
-egg_pys = {} # no more eggs!
-
-default_py = '3.7'
+default_py = "3.7"
 # all the Python versions to be built on linux
-if platform.processor() == 'osx' :
-    manylinux_pys = '3.8 3.7 2.7 3.5 3.6'
+if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
+    manylinux_pys = "3.9 3.8 3.7 3.5 3.6"
 else:
     manylinux_pys = '3.8 3.7 3.5 3.6'
 
@@ -110,6 +100,13 @@ sdist_root = pjoin(tmp, 'pyzmq-sdist')
 
 def _py(py):
     return py_exes[py]
+
+def run(cmd, **kwargs):
+    """wrapper around invoke.run that accepts a Popen list"""
+    if isinstance(cmd, list):
+        cmd = " ".join(pipes.quote(s) for s in cmd)
+    kwargs.setdefault('echo', True)
+    return invoke_run(cmd, **kwargs)
 
 @contextmanager
 def cd(path):
@@ -131,8 +128,8 @@ def clone_repo(ctx, reset=False):
             run("git checkout %s" % branch)
             run("git pull")
     else:
-        run("git config --global user.email odidev@puresoftware.com")
-        run("git config --global user.name odidev")
+        run("git config --global user.email "junk@junk.com"")
+        run("git config --global user.name "junk"")
         run("git clone -b %s %s %s" % (branch, repo, repo_root))
 
 @task
@@ -212,7 +209,7 @@ def build_sdist(py, upload=False):
 @task
 def sdist(ctx, vs, upload=False):
     clone_repo(ctx)
-    
+    """Generates tag already present issue"""
     #tag(ctx, vs, push=upload)
     py = make_env(default_py, 'cython', 'twine', 'certifi')
     tarball = build_sdist(py, upload=upload)
@@ -239,13 +236,11 @@ def untar(tarball):
     return glob.glob(pjoin(sdist_root, '*'))[0]
 
 @task
-def bdist(ctx, py, wheel=True, egg=False):
+def bdist(ctx, py, wheel=True):
     py = make_env(py, 'wheel')
     cmd = [py, 'setup.py']
     if wheel:
         cmd.append('bdist_wheel')
-    if egg:
-        cmd.append('bdist_egg')
     cmd.append('--zmq=bundled')
 
     run(cmd)
@@ -262,7 +257,8 @@ def manylinux(ctx, vs, upload=False, pythons=manylinux_pys):
         with cd(manylinux):
             run("git pull")
             run("git submodule update")
-    if platform.processor() == 'osx' : 
+
+    if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
         run("docker pull quay.io/pypa/manylinux1_i686")
     elif platform.processor() == 'aarch64':
         run("docker pull quay.io/pypa/manylinux2014_aarch64")
@@ -286,7 +282,7 @@ def manylinux(ctx, vs, upload=False, pythons=manylinux_pys):
     ])
 
     with cd(manylinux):
-        if platform.processor() == 'osx' :
+        if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
             run(base_cmd +  " quay.io/pypa/manylinux1_i686 linux32 /io/build_pyzmqs.sh")
         elif platform.processor() == 'aarch64':
             run(base_cmd +  " quay.io/pypa/manylinux2014_aarch64 /io/build_pyzmqs.sh")
@@ -314,7 +310,7 @@ def release(ctx, vs, upload=False):
 
     with cd(path):
         for v in py_exes:
-            bdist(ctx, v, wheel=True, egg=(v in egg_pys))
+            bdist(ctx, v, wheel=True)
         if upload:
             py = make_env(default_py, 'twine')
             run(['twine', 'upload', 'dist/*'])
