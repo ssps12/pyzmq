@@ -62,7 +62,8 @@ matrix:
       env: ZMQ=bundled
       arch: arm64
       script: 
-        - if [[ -n "$TRAVIS_TAG" ]]; then cd tools && invoke release 19.0.2; fi
+        - echo $TRAVIS_TAG
+        - if [[ -n "$TRAVIS_TAG" ]]; then cd tools && invoke release $TRAVIS_TAG; fi
         - cd ../ && travis_retry python setup.py test
     - python: 3.7
       env: ZMQ=bundled
