@@ -54,7 +54,12 @@ if platform.processor() != 'aarch64' and platform.processor() != 'x86_64' :
     # set mac deployment target
     if 'MACOSX_DEPLOYMENT_TARGET' not in os.environ:
         os.environ['MACOSX_DEPLOYMENT_TARGET'] = '10.9'
-
+        
+    # all the Python versions to be built on linux
+    manylinux_pys = "3.9 3.8 3.7 3.5 3.6"
+else:
+    manylinux_pys = '3.8 3.7 3.5 3.6'
+    
     _framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
     py_exes = {
         "3.9": _framework_py("3.9"),
@@ -73,11 +78,6 @@ else:
     py_exes = {
         '3.7' : "/home/travis/virtualenv/python3.7.1/bin/python",
     }
-
-    # all the Python versions to be built on linux
-    manylinux_pys = "3.9 3.8 3.7 3.5 3.6"
-else:
-    manylinux_pys = '3.8 3.7 3.5 3.6'
     
 # set compiler env (avoids issues with missing 'gcc-4.2' on py27, etc.)
 if 'CC' not in os.environ:
@@ -123,8 +123,8 @@ def clone_repo(ctx, reset=False):
             run("git checkout %s" % branch)
             run("git pull")
     else:
-        run("git config --global user.email junk@junk.com")
-        run("git config --global user.name junk")
+        run("git config --global user.email test@test.com")
+        run("git config --global user.name test")
         run("git clone -b %s %s %s" % (branch, repo, repo_root))
 
 @task
