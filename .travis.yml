@@ -57,7 +57,13 @@ matrix:
       arch: arm64
       script: 
         - cd tools && invoke release 19.0.1
-        - cd ../ && travis_retry python setup.py test 
+        - cd ../ && travis_retry python setup.py test
+     - python: 3.8
+      env: ZMQ=
+      arch: arm64
+      script: 
+        - cd tools && invoke release 19.0.1
+        - cd ../ && travis_retry python setup.py test
     - python: 3.7
       env: ZMQ=bundled
       arch: arm64
@@ -74,6 +80,11 @@ matrix:
       script: 
         - cd tools && invoke release 19.0.1
         - cd ../ && travis_retry python setup.py test 
+     - python: 3.8
+      env: ZMQ=
+      script: 
+        - cd tools && invoke release 19.0.1
+        - cd ../ && travis_retry python setup.py test
     - os: osx
       language: generic
       env: ZMQ=
