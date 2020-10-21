@@ -48,6 +48,10 @@ if platform.processor() != 'aarch64' and platform.processor() != 'x86_64' :
         else:
             print("SDK not found at %r" % sdkroot)
             time.sleep(10)
+        # all the Python versions to be built on linux
+    manylinux_pys = "3.9 3.8 3.7 3.5 3.6"
+else:
+    manylinux_pys = '3.8 3.7 3.5 3.6'        
     # Workaround for PyPy3 5.8
     if 'LDFLAGS' not in os.environ:
         os.environ['LDFLAGS'] = '-undefined dynamic_lookup'
@@ -55,11 +59,6 @@ if platform.processor() != 'aarch64' and platform.processor() != 'x86_64' :
     if 'MACOSX_DEPLOYMENT_TARGET' not in os.environ:
         os.environ['MACOSX_DEPLOYMENT_TARGET'] = '10.9'
         
-    # all the Python versions to be built on linux
-    manylinux_pys = "3.9 3.8 3.7 3.5 3.6"
-else:
-    manylinux_pys = '3.8 3.7 3.5 3.6'
-    
     _framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
     py_exes = {
         "3.9": _framework_py("3.9"),
