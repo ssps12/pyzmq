@@ -38,10 +38,6 @@ pjoin = os.path.join
 repo = 'https://github.com/zeromq/pyzmq'
 branch = os.getenv('PYZMQ_BRANCH', 'master')
 if platform.processor() != 'aarch64' and platform.processor() != 'x86_64' :
-    # all the Python versions to be built on linux
-    manylinux_pys = "3.9 3.8 3.7 3.5 3.6"
-else:
-    manylinux_pys = '3.8 3.7 3.5 3.6'   
     sdkroot = os.getenv("SDKROOT")
     if not sdkroot:
         xcode_prefix = check_output(["xcode-select", "-p"]).decode().strip()
@@ -86,6 +82,9 @@ if 'CXX' not in os.environ:
     os.environ['CXX'] = 'clang++'
     
 default_py = "3.7"
+
+# all the Python versions to be built on linux
+manylinux_pys = "3.9 3.8 3.7 3.5 3.6"
 
 tmp = "/tmp"
 env_root = os.path.join(tmp, 'envs')
