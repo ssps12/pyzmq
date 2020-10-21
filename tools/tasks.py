@@ -123,8 +123,8 @@ def clone_repo(ctx, reset=False):
             run("git checkout %s" % branch)
             run("git pull")
     else:
-        run("git config --global user.email "junk@junk.com"")
-        run("git config --global user.name "junk"")
+        run("git config --global user.email junk@junk.com")
+        run("git config --global user.name junk")
         run("git clone -b %s %s %s" % (branch, repo, repo_root))
 
 @task
