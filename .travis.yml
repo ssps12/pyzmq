@@ -31,7 +31,7 @@ before_install:
   #    popd	
   #    export ZMQ=/usr/local	
   #    export ZMQ_DRAFT_API=1	
-    fi	
+  #   fi	
  # - pip install -r test-requirements.txt	
   - pip install invoke cython requests	
  # - |	
