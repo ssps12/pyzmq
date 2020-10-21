@@ -65,13 +65,13 @@ if platform.processor() != 'aarch64' and platform.processor() != 'x86_64' :
         "pypy": "/usr/local/bin/pypy",
         "pypy3": "/usr/local/bin/pypy3",
    }
-elif platform.processor() == 'aarch64':
-    py_exes = {
-        '3.7' : "/home/travis/virtualenv/python3.7.5/bin/python",
-    }
+#elif platform.processor() == 'aarch64':
+#    py_exes = {
+#        '3.7' : "/home/travis/virtualenv/python3.7.5/bin/python",
+#    }
 else:
     py_exes = {
-        '3.7' : "/home/travis/virtualenv/python3.7.1/bin/python",
+        '3.8' : "/home/travis/virtualenv/python3.8.0/bin/python",
     }
     
 # set compiler env (avoids issues with missing 'gcc-4.2' on py27, etc.)
@@ -81,7 +81,7 @@ if 'CC' not in os.environ:
 if 'CXX' not in os.environ:
     os.environ['CXX'] = 'clang++'
     
-default_py = "3.7"
+default_py = "3.8"
 
 # all the Python versions to be built on linux
 manylinux_pys = "3.9 3.8 3.7 3.5 3.6"
