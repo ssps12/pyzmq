@@ -48,25 +48,13 @@ if platform.processor() != 'aarch64' and platform.processor() != 'x86_64' :
         else:
             print("SDK not found at %r" % sdkroot)
             time.sleep(10)
-
-# Workaround for PyPy3 5.8
-if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
+    # Workaround for PyPy3 5.8
     if 'LDFLAGS' not in os.environ:
         os.environ['LDFLAGS'] = '-undefined dynamic_lookup'
-
-# set mac deployment target
-if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
+    # set mac deployment target
     if 'MACOSX_DEPLOYMENT_TARGET' not in os.environ:
         os.environ['MACOSX_DEPLOYMENT_TARGET'] = '10.9'
 
-# set compiler env (avoids issues with missing 'gcc-4.2' on py27, etc.)
-if 'CC' not in os.environ:
-    os.environ['CC'] = 'clang'
-
-if 'CXX' not in os.environ:
-    os.environ['CXX'] = 'clang++'
-
-if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
     _framework_py = lambda xy: "/Library/Frameworks/Python.framework/Versions/{0}/bin/python{0}".format(xy)
     py_exes = {
         "3.9": _framework_py("3.9"),
@@ -86,6 +74,13 @@ else:
         '3.7' : "/home/travis/virtualenv/python3.7.1/bin/python",
     }
 
+# set compiler env (avoids issues with missing 'gcc-4.2' on py27, etc.)
+if 'CC' not in os.environ:
+    os.environ['CC'] = 'clang'
+
+if 'CXX' not in os.environ:
+    os.environ['CXX'] = 'clang++'
+    
 default_py = "3.7"
 # all the Python versions to be built on linux
 if platform.processor() != 'aarch64' and platform.processor() != 'x86_64':
