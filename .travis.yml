@@ -77,7 +77,7 @@ matrix:
     - python: 3.8
       env: ZMQ=bundled
       script: 
-       - if [[ -n "$TRAVIS_TAG" ]]; then cd tools && invoke release 19.0.2; fi
+       - if [[ -n "$TRAVIS_TAG" ]]; then cd tools && invoke release $TRAVIS_TAG; fi
        - cd ../ && travis_retry python setup.py test
     #- os: osx
     #  language: generic
