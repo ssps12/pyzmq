@@ -55,7 +55,7 @@ before_install:
   - python setup.py bdist_wheel --zmq=bundled
   - git clone --recursive https://github.com/minrk/manylinux-builds -b pyzmq
   - docker pull quay.io/pypa/manylinux2014_aarch64
-  - docker run --dns=8.8.8.8 --rm -e PYZMQ_VERSIONS='v19.0.2' -e PYTHON_VERSIONS='3.9 3.8 3.7 3.5 3.6' -e ZMQ_VERSION='4.3.2' -e LIBSODIUM_VERSION='1.0.18' -v $PWD:/io quay.io/pypa/manylinux2014_aarch64 /io bash -c ls
+  - docker run --dns=8.8.8.8 --rm -e PYZMQ_VERSIONS='v19.0.2' -e PYTHON_VERSIONS='3.9 3.8 3.7 3.5 3.6' -e ZMQ_VERSION='4.3.2' -e LIBSODIUM_VERSION='1.0.18' -v $PWD:/io quay.io/pypa/manylinux2014_aarch64 bash -c cd /io; ls
 
 install:
   - python setup.py build_ext --inplace --zmq=$ZMQ
